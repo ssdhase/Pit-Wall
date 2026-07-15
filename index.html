@@ -1021,7 +1021,8 @@ function renderLog(){
 function rmLog(id){ dayData.entries=dayData.entries.filter(e=>e.id!==id); persistDay(); renderLog(); renderKPIs(); }
 function repeatEntry(id){
   const e=dayData.entries.find(x=>x.id===id); if(!e) return;
-  const clone={...e, id:uid()};
+  const meal=document.getElementById('mealSelect').value; // land in whatever meal is selected
+  const clone={...e, id:uid(), meal};
   if(isToday(currentDate)){
     dayData.entries.push(clone);
     persistDay(); renderLog(); renderKPIs();
@@ -1031,7 +1032,7 @@ function repeatEntry(id){
     const td=store.get(key,{entries:[],burned:[],habitsDone:[]});
     td.entries.push(clone);
     store.set(key,td);
-    alert('Logged "'+e.name+'" ('+Math.round(e.calories)+' cal) to today.');
+    alert('Logged "'+e.name+'" ('+Math.round(e.calories)+' cal) to today\'s '+meal+'.');
   }
 }
 function copyYesterday(meal){
